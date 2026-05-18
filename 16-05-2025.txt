@@ -1,0 +1,31 @@
+show databases;
+
+create database VITBranches;
+
+use VITBranches;
+
+create table Mechanical(
+  student_id INT,
+  student_name VARCHAR(60),
+  student_marks INT
+);
+
+create table LAW(
+  student_id INT,
+  student_name VARCHAR(50),
+  student_marks INT
+);
+
+create table CSE(
+  student_id INT,
+  student_name VARCHAR(50),
+  student_marks INT
+);
+
+SHOW tables;
+
+INSERT INTO Mechanical VALUES(1001,'Toothless',79);
+INSERT INTO Mechanical VALUES(1002,'Nani',96);
+INSERT INTO Mechanical VALUES(1003,'Ram',84);
+INSERT INTO Mechanical VALUES(1004,'Rohit',10);
+INSERT INTO Mechanical VALUES(1005,'HariKrishna',59);
