@@ -1,0 +1,90 @@
+SHOW DATABASES;
+
+USE VITBranches;
+
+SHOW TABLES FROM VITBranches;
+
+SELECT * FROM Mechanical;
+
+DESC Mechanical;
+
+--Add Column without default value
+ALTER TABLE Mechanical ADD(
+  studentPhone INT
+);
+
+INSERT INTO Mechanical VALUES(16,'Praneeth',69,1234567890);
+SELECT * FROM Mechanical;
+
+--Adding column with default value
+ALTER TABLE Mechanical ADD(
+  studentRole VARCHAR(10) DEFAULT 'Developer'
+);
+
+INSERT INTO Mechanical VALUES(17,'Samuel',99,4567894561,'Designer');
+SELECT * FROM Mechanical;
+
+--Dropping a table column
+ALTER TABLE Mechanical DROP COLUMN studentPhone;
+SELECT * FROM Mechanical;
+
+--To delete all rows
+TRUNCATE TABLE Mechanical;
+
+--To drop a complete table
+DROP TABLE Mechanical;
+
+--To Rename the Table
+RENAME TABLE ECE TO EEE;
+
+
+CREATE TABLE Worker (
+	WORKER_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	FIRST_NAME CHAR(25),
+	LAST_NAME CHAR(25),
+	SALARY INT(15),
+	JOINING_DATE DATETIME,
+	DEPARTMENT CHAR(25)
+);
+
+INSERT INTO Worker (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES
+	(001, 'Monika', 'Arora', 100000, '14-02-20 09.00.00', 'HR'),
+	(002, 'Niharika', 'Verma', 80000, '14-06-11 09.00.00', 'Admin'),
+	(003, 'Vishal', 'Singhal', 300000, '14-02-20 09.00.00', 'HR'),
+	(004, 'Amitabh', 'Singh', 500000, '14-02-20 09.00.00', 'Admin'),
+	(005, 'Vivek', 'Bhati', 500000, '14-06-11 09.00.00', 'Admin'),
+	(006, 'Vipul', 'Diwan', 200000, '14-06-11 09.00.00', 'Account'),
+	(007, 'Satish', 'Kumar', 75000, '14-01-20 09.00.00', 'Account'),
+	(008, 'Geetika', 'Chauhan', 90000, '14-04-11 09.00.00', 'Admin');
+
+--Updating a specific row
+UPDATE Worker SET FIRST_NAME='Preethi' WHERE WORKER_ID=001;
+
+--Updating Whole Column
+UPDATE Worker SET SALARY=SALARY+5000;
+
+--Deleting a Row from table
+DELETE FROM Worker WHERE WORKER_ID=008;
+
+--TCL COMMANDS;
+CREATE TABLE Employees(
+  EMP_ID INT
+);
+START TRANSACTION;
+
+INSERT INTO Employees VALUES(101);
+SAVEPOINT time1;
+
+INSERT INTO Employees VALUES(102);
+SAVEPOINT time2;
+SELECT * FROM Employees;
+
+ROLLBACK TO time1;
+SELECT * FROM Employees;
+
+--WHERE Clause
+SELECT * FROM Worker WHERE SALARY<90000;
+
+SELECT * FROM Worker WHERE SALARY>100000;
+
+SELECT * FROM Worker WHERE SALARY=200000;
