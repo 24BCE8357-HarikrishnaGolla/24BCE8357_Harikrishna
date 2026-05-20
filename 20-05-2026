@@ -1,0 +1,132 @@
+-- Select the database
+USE vitBranches;
+
+-- 1. UNIQUE Constraint Example
+
+CREATE TABLE People (
+    People_ID INT NOT NULL,
+    LastName VARCHAR(255) UNIQUE NOT NULL,   -- UNIQUE constraint
+    FirstName VARCHAR(255) NOT NULL,
+    Age INT
+);
+
+DESC People;
+
+INSERT INTO People VALUES (100, 'N', 'Nani', NULL);
+
+SELECT * FROM People;
+
+-- Add UNIQUE constraint on Age column
+ALTER TABLE People
+ADD UNIQUE (Age);
+
+-- Drop UNIQUE constraint on Age
+ALTER TABLE People
+DROP INDEX Age;
+
+DROP TABLE People;
+
+-- 2. CHECK Constraint Example
+CREATE TABLE People (
+    Age INT NOT NULL,
+    CHECK (Age >= 18 AND Age <= 23)   -- CHECK constraint
+);
+
+INSERT INTO People VALUES (21);
+
+SELECT * FROM People;
+
+DROP TABLE People;
+
+
+-- 3. DEFAULT Constraint Example
+
+CREATE TABLE People1 (
+    ID INT NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(255),
+    Age INT,
+    City VARCHAR(255) DEFAULT 'Vijayawada'   -- DEFAULT constraint
+);
+
+DESC People1;
+
+INSERT INTO People1 (ID, LastName, FirstName, Age)
+VALUES (1, 'Kumar', 'Ravi', 22);
+
+SELECT * FROM People1;
+
+DROP TABLE People1;
+
+-- 4. PRIMARY KEY and UNIQUE Constraint Example
+CREATE TABLE Products (
+    Prod_ID INT PRIMARY KEY,                 -- PRIMARY KEY constraint
+    Prod_Name VARCHAR(100) NOT NULL,
+    Pref_No INT NOT NULL UNIQUE              -- UNIQUE constraint
+);
+
+DESC Products;
+
+INSERT INTO Products VALUES (101, 'Materials', 29480);
+
+SELECT * FROM Products;
+
+DROP TABLE Products;
+
+
+-- 5. PRIMARY KEY using ALTER TABLE
+
+CREATE TABLE People (
+    People_ID INT,
+    LastName VARCHAR(255),
+    FirstName VARCHAR(255),
+    Age INT
+);
+
+-- Add PRIMARY KEY constraint
+ALTER TABLE People
+ADD PRIMARY KEY (People_ID);
+
+-- Drop PRIMARY KEY constraint
+ALTER TABLE People
+DROP PRIMARY KEY;
+
+DROP TABLE People;
+
+
+-- 6. FOREIGN KEY Constraint Example
+
+
+-- Parent Table
+CREATE TABLE Category (
+    Cat_ID INT PRIMARY KEY,
+    Cat_Name VARCHAR(100) NOT NULL
+);
+
+INSERT INTO Category VALUES
+(102, 'Gadgets'),
+(103, 'Clone App');
+
+SELECT * FROM Category;
+
+-- Child Table
+CREATE TABLE Products1 (
+    P_ID INT PRIMARY KEY,
+    P_Name VARCHAR(100) NOT NULL,
+    Cat_ID INT,
+    FOREIGN KEY (Cat_ID) REFERENCES Category(Cat_ID)
+);
+
+DESC Products1;
+
+-- Insert valid records
+INSERT INTO Products1 VALUES
+(500, 'Headset Samsung', 102),
+(501, 'Bluetooth Speaker', 103);
+
+SELECT * FROM Products1;
+
+-- This will fail if Cat_ID exists in Products1
+-- DELETE FROM Category WHERE Cat_ID = 102;
+
+-- Drop child table first, then parent table
