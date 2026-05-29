@@ -1,0 +1,234 @@
+db.products.insertMany([
+    { "_id" : 1, "name" : "xPhone", "price" : 799, "releaseDate" : ISODate("2011-05-14T00:00:00Z"), "spec" : { "ram" : 4, "screen" : 6.5, "cpu" : 2.66 }, "color" : [ "white", "black" ], "storage" : [ 64, 128, 256 ] },
+    { "_id" : 2, "name" : "xTablet", "price" : 899, "releaseDate" : ISODate("2011-09-01T00:00:00Z"), "spec" : { "ram" : 16, "screen" : 9.5, "cpu" : 3.66 }, "color" : [ "white", "black", "purple" ], "storage" : [ 128, 256, 512 ] },
+    { "_id" : 3, "name" : "SmartTablet", "price" : 899, "releaseDate" : ISODate("2015-01-14T00:00:00Z"), "spec" : { "ram" : 12, "screen" : 9.7, "cpu" : 3.66 }, "color" : [ "blue" ], "storage" : [ 16, 64, 128 ] },
+    { "_id" : 4, "name" : "SmartPad", "price" : 699, "releaseDate" : ISODate("2020-05-14T00:00:00Z"), "spec" : { "ram" : 8, "screen" : 9.7, "cpu" : 1.66 }, "color" : [ "white", "orange", "gold", "gray" ], "storage" : [ 128, 256, 1024 ] },
+    { "_id" : 5, "name" : "SmartPhone", "price" : 599, "releaseDate" : ISODate("2022-09-14T00:00:00Z"), "spec" : { "ram" : 4, "screen" : 9.7, "cpu" : 1.66 }, "color" : [ "white", "orange", "gold", "gray" ], "storage" : [ 128, 256 ] },
+    { "_id" : 6, "name" : "xWidget", "spec" : { "ram" : 64, "screen" : 9.7, "cpu" : 3.66 }, "color" : [ "black" ], "storage" : [ 1024 ] },
+    { "_id" : 7, "name" : "xReader", "price" : null, "spec" : { "ram" : 64, "screen" : 6.7, "cpu" : 3.66 }, "color" : [ "black", "white" ], "storage" : [ 128 ] }
+])
+
+cursor.sort({field1: order, field2: order, ...})
+cursor.sort({ field: 1 })
+cursor.sort({field: -1})
+cursor.sort({field1: 1, field2: -1});
+db.products.find({
+    'price': {
+        $exists: 1
+    }
+}, {
+    name: 1,
+    price: 1
+})
+db.products.find({
+    'price': {
+        $exists: 1
+    }
+}, {
+    name: 1,
+    price: 1
+}).sort({
+    price: 1
+})
+
+db.products.find({
+    'price': {
+        $exists: 1
+    }
+}, {
+    name: 1,
+    price: 1
+}).sort({
+    price: -1
+})
+db.products.find({
+    'price': {
+        $exists: 1
+    }
+}, {
+    name: 1,
+    price: 1
+}).sort({
+    price: 1,
+    name: 1
+});
+
+db.products.find({
+    'price': {
+        $exists: 1
+    }
+}, {
+    name: 1,
+    price: 1
+}).sort({
+    price: 1,
+    name: -1
+})
+
+db.products.find({
+    releaseDate: {
+        $exists: 1
+    }
+
+}, {
+    name: 1,
+    releaseDate: 1
+}).sort({
+    releaseDate: 1
+});
+
+db.products.find({
+    releaseDate: {
+        $exists: 1
+    }
+
+}, {
+    name: 1,
+    releaseDate: 1
+}).sort({
+    releaseDate: -1
+});
+db.collection.find(<query>).limit(<documentCount>)
+cursor
+   .sort({...})
+   .limit(<documentCount>)
+cursor.skip(<offset>)
+
+db.collection.find({...}
+).sort({...}
+).skip(pageNo > 0 ? ( ( pageNo - 1 ) * documentCount) : 0
+).limit(documentCount);
+
+db.products.find({}, {
+    name: 1,
+    price: 1
+}).sort({
+    price: -1
+}).limit(1);
+[ { _id: 2, name: 'xTablet', price: 899 } ]
+
+db.products.find({}, {
+    name: 1,
+    price: 1
+}).sort({
+    price: -1,
+    name: 1
+}).limit(1);
+[ { _id: 3, name: 'SmartTablet', price: 899 } ]
+
+db.products.find({}, {
+    name: 1,
+    price: 1
+}).sort({
+    price: -1,
+    name: 1
+}).skip(2).limit(2);
+
+db.collection.updateOne(filter, update, options)
+
+db.products.updateOne({
+    _id: 1
+}, {
+    $set: {
+        price: 899
+    }
+})
+
+db.products.findOne({ _id: 1 }, { name: 1, price: 1 })
+
+db.products.find({ price: 899 }, { name: 1, price: 1 })
+
+db.products.updateOne({ price: 899 }, { $set: { price: null } })
+
+db.products.find({ _id: 1}, { name: 1, price: 1 })
+
+db.products.find({ _id: 4 }, { name: 1, spec: 1 })
+
+db.products.updateOne({
+    _id: 4
+}, {
+    $set: {
+        "spec.ram": 16,
+        "spec.screen": 10.7,
+        "spec.cpu": 2.66
+    }
+})
+
+db.products.find({ _id: 4 }, { name: 1, spec: 1 })
+
+second elements of the storage array in the document with _id 4:
+db.products.updateOne(
+ { _id: 4}, 
+ {
+    $set: {
+        "storage.0": 16,
+        "storage.1": 32
+    }
+
+db.products.updateOne({
+    _id: 1
+}, {
+    $inc: {
+        price: 50
+    }
+})
+
+db.products.updateOne({
+    _id: 1
+}, {
+    $inc: {
+        price: -150
+    }
+})
+
+db.products.updateOne({
+    _id: 1
+}, {
+    $inc: {
+        price: 50,
+        "spec.ram": 4
+    }
+})
+
+db.products.find(
+    {_id: 1},
+    {name: 1, price: 1, "spec.ram": 1}
+)
+
+db.products.updateOne({
+    _id: 5
+}, {
+    $min: {
+        price: 699
+    }
+})
+
+db.products.updateOne({
+    _id: 5
+}, {
+    $min: {
+        price: 499
+    }
+})
+
+db.products.updateOne({
+    _id: 1
+}, {
+    $max: {
+        price: 699
+    }
+})
+
+document _id 1 to 899:
+db.products.updateOne({
+    _id: 1
+}, {
+    $max: {
+        price: 899
+    }
+})
+
+db.products.find({ _id: 1 }, { name: 1, price: 1 })
+ }
+)
+
