@@ -1,0 +1,178 @@
+MongoDb Commands:
+cd CollegeDB
+db.createCollection(“Students”)
+CRUD Opeartions:
+1)Create Data:
+Java Code:
+import com.mongodb.client.*; 
+import com.mongodb.client.model.Filters; 
+import com.mongodb.client.model.Updates; 
+import org.bson.Document; 
+public class MongoDB_CRUD {
+	 public static void main(String[] args) {          
+		 // Connect to MongoDB         
+		 MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");          
+		 // Access database         
+		 MongoDatabase database = mongoClient.getDatabase("CollegeDB");          
+		 // Access collection         
+		 MongoCollection<Document> collection = database.getCollection("Students"); 
+		 //Create Data
+		 Document student = new Document("id", 101).append("name", "John").append("department", "CSE").append("cgpa", 8.7);
+		 collection.insertOne(student);
+		 System.out.println("Document Inserted Successfully");   
+	 }
+}
+
+2)Read Data:
+Java Code:
+import com.mongodb.client.*; 
+import com.mongodb.client.model.Filters; 
+import com.mongodb.client.model.Updates; 
+import org.bson.Document; 
+public class MongoDB_CRUD {
+	 public static void main(String[] args) {          
+		 // Connect to MongoDB         
+		 MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");          
+		 // Access database         
+		 MongoDatabase database = mongoClient.getDatabase("CollegeDB");          
+		 // Access collection         
+		 MongoCollection<Document> collection = database.getCollection("Students"); 
+		 //Read Data
+		 System.out.println("\nStudent Records:");
+		 FindIterable<Document> students = collection.find();   
+		 for (Document doc : students) {
+			 System.out.println(doc.toJson());        
+		 }  
+	 }
+}
+
+3)Update Data:
+Java Code:
+import com.mongodb.client.*; 
+import com.mongodb.client.model.Filters; 
+import com.mongodb.client.model.Updates; 
+import org.bson.Document; 
+public class MongoDB_CRUD {
+	 public static void main(String[] args) {          
+		 // Connect to MongoDB         
+		 MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");          
+		 // Access database         
+		 MongoDatabase database = mongoClient.getDatabase("CollegeDB");          
+		 // Access collection         
+		 MongoCollection<Document> collection = database.getCollection("Students");
+		 //Update
+		 collection.updateOne(                 
+				 Filters.eq("id", 101),                 
+				 Updates.set("cgpa", 9.2)
+		 );
+		 System.out.println("\nDocument Updated Successfully"); 
+		 //Reading Updated Data
+		 Document updatedStudent=collection.find(Filters.eq("id", 101)).first();
+		 System.out.println("\nUpdated Record:");
+		 System.out.println(updatedStudent.toJson()); 
+	 }
+}
+
+4)Delete Data:
+Java Code:
+import com.mongodb.client.*; 
+import com.mongodb.client.model.Filters; 
+import com.mongodb.client.model.Updates; 
+import org.bson.Document; 
+public class MongoDB_CRUD {
+	 public static void main(String[] args) {          
+		 // Connect to MongoDB         
+		 MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");          
+		 // Access database         
+		 MongoDatabase database = mongoClient.getDatabase("CollegeDB");          
+		 // Access collection         
+		 MongoCollection<Document> collection = database.getCollection("Students");
+		 //Delete 
+		 collection.deleteOne(Filters.eq("id", 101));
+		 System.out.println("\nDocument Deleted Successfully");
+		 // Close connection         
+		 mongoClient.close(); 
+	 }
+}
+5)Multiple Records:
+JavaCode:
+import com.mongodb.client.*; 
+import com.mongodb.client.model.Filters; 
+import com.mongodb.client.model.Updates; 
+import org.bson.Document; 
+public class MongoDB_CRUD {
+	 public static void main(String[] args) {          
+		 // Connect to MongoDB         
+		 MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");          
+		 // Access database         
+		 MongoDatabase database = mongoClient.getDatabase("CollegeDB");          
+		 // Access collection         
+		 MongoCollection<Document> collection = database.getCollection("Students"); 
+		 //Create
+		 collection.insertMany(java.util.Arrays.asList( 
+				 new Document("id", 1).append("name", "Alice"), 
+				 new Document("id", 2).append("name", "Bob"), 
+				 new Document("id", 3).append("name", "Charlie") 
+		));
+		 //Reading Specific Document
+		 Document doc = collection.find(Filters.eq("id", 2)).first(); 
+		 System.out.println(doc.toJson()); 
+		 //Updating Data
+		 collection.updateOne( Filters.eq("id", 2), Updates.set("name", "Bobby") ); 
+		 System.out.println("Updated Successfully");
+		 //Deleting Data
+		 collection.deleteOne(Filters.eq("id", 2)); 
+		 System.out.println("Deleted Successfully");
+		 //Reading Final Data
+		 FindIterable<Document> students = collection.find();   
+		 for (Document x : students) {
+			 System.out.println(x.toJson());        
+		 }
+	 }
+}
+
+6)CRUD Operations with MANY:
+JavaCode:
+import com.mongodb.client.*; 
+import com.mongodb.client.model.Filters; 
+import com.mongodb.client.model.Updates; 
+import org.bson.Document; 
+public class MongoDB_CRUD {
+	 public static void main(String[] args) {          
+		 // Connect to MongoDB         
+		 MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");          
+		 // Access database         
+		 MongoDatabase database = mongoClient.getDatabase("CollegeDB");          
+		 // Access collection         
+		 MongoCollection<Document> collection = database.getCollection("Students"); 
+		 //Create
+		 collection.insertMany(java.util.Arrays.asList( 
+				 new Document("id", 1).append("name", "Alice"), 
+				 new Document("id", 2).append("name", "Bob"), 
+				 new Document("id", 3).append("name", "Charlie") 
+		));
+		 System.out.println("Data Inserted Successfully");
+		 //Reading Specific Document
+		 System.out.println("Reading Data");
+		 FindIterable<Document> students = collection.find();   
+		 for (Document doc : students) {
+			 System.out.println(doc.toJson());        
+		 } 
+		 //Updating Data
+		 collection.updateMany( Filters.in("id",1,2), Updates.set("name", "Bobby") ); 
+		 System.out.println("Updated Successfully,UpdatedData:");
+		 //Reading After Updating
+		 students = collection.find();   
+		 for (Document x : students) {
+			 System.out.println(x.toJson());        
+		 }
+		 //Deleting Data
+		 collection.deleteMany(Filters.in("id",2,3)); 
+		 System.out.println("Deleted Successfully,Data After Deleting:");
+		 //Reading After Deleting
+		 students = collection.find();   
+		 for (Document x : students) {
+			 System.out.println(x.toJson());        
+		 }
+	 }
+}

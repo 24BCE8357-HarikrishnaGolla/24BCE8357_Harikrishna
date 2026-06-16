@@ -1,0 +1,114 @@
+mkdir C:\data
+
+cd C:\data
+
+mkdir db0
+
+mkdir db1
+
+mkdir db2
+
+In cmd1:
+"C:\Programe Files\mongodb\Server\4.0\bin\mongod.exe" --replSet myReplSet --dbpath C:\data\db0 --port 27017 --bind_ip localhost
+
+In cmd2:
+"C:\Programe Files\mongodb\Server\4.0\bin\mongod.exe" --replSet myReplSet --dbpath C:\data\db1 --port 27018 --bind_ip localhost
+
+In cmd3:
+"C:\Programe Files\mongodb\Server\4.0\bin\mongod.exe" --replSet myReplSet --dbpath C:\data\db2 --port 27019 --bind_ip localhost
+
+Connecting port 27017 to compass.Then,
+
+rs.initiate({
+   _id:"myReplSet",
+   members:[
+      {_id:0,host:"localhost:27017"},
+      {_id:1,host:"localhost:27018"},
+      {_id:2,host:"localhost:27019"}
+   ]
+})
+Output:
+{ "ok" : 1}
+
+rs.status()
+Output:
+{
+  "_id" : 0,
+  "name" : "localhost:27017",
+  "health" : 1,
+  "state" : 1,
+  "stateStr" : "PRIMARY",
+  "uptime" : 281,
+  "optime" : {
+      "ts" : Timestamp(1781016083, 1),
+      "t" : NumberLong(1)
+  },
+  "optimeDate" : ISODate("2026-06-09T14:41:23Z"),
+  "syncingTo" : "",
+  "syncSourceHost" : "",
+  "syncSourceId" : -1,
+  "infoMessage" : "could not find member to sync from",
+  "electionTime" : Timestamp(1781016043, 1),
+  "electionDate" : ISODate("2026-06-09T14:40:43Z"),
+  "configVersion" : 1,
+  "self" : true,
+  "lastHeartbeatMessage" : ""
+},
+
+{
+  "_id" : 1,
+  "name" : "localhost:27018",
+  "health" : 1,
+  "state" : 2,
+  "stateStr" : "SECONDARY",
+  "uptime" : 51,
+  "optime" : {
+      "ts" : Timestamp(1781016073, 1),
+      "t" : NumberLong(1)
+  },
+  "optimeDurable" : {
+      "ts" : Timestamp(1781016073, 1),
+      "t" : NumberLong(1)
+  },
+  "optimeDate" : ISODate("2026-06-09T14:41:13Z"),
+  "optimeDurableDate" : ISODate("2026-06-09T14:41:13Z"),
+  "lastHeartbeat" : ISODate("2026-06-09T14:41:23.690Z"),
+  "lastHeartbeatRecv" : ISODate("2026-06-09T14:41:24.319Z"),
+  "pingMs" : NumberLong(1),
+  "lastHeartbeatMessage" : "",
+  "syncingTo" : "localhost:27017",
+  "syncSourceHost" : "localhost:27017",
+  "syncSourceId" : 0,
+  "infoMessage" : "",
+  "configVersion" : 1
+},
+
+{
+  "_id" : 2,
+  "name" : "localhost:27019",
+  "health" : 1,
+  "state" : 2,
+  "stateStr" : "SECONDARY",
+  "uptime" : 51,
+  "optime" : {
+      "ts" : Timestamp(1781016073, 1),
+      "t" : NumberLong(1)
+  },
+  "optimeDurable" : {
+      "ts" : Timestamp(1781016073, 1),
+      "t" : NumberLong(1)
+  },
+  "optimeDate" : ISODate("2026-06-09T14:41:13Z"),
+  "optimeDurableDate" : ISODate("2026-06-09T14:41:13Z"),
+  "lastHeartbeat" : ISODate("2026-06-09T14:41:23.690Z"),
+  "lastHeartbeatRecv" : ISODate("2026-06-09T14:41:24.318Z"),
+  "pingMs" : NumberLong(0),
+  "lastHeartbeatMessage" : "",
+  "syncingTo" : "localhost:27017",
+  "syncSourceHost" : "localhost:27017",
+  "syncSourceId" : 0,
+  "infoMessage" : "",
+  "configVersion" : 1
+}
+
+"ok" : 1
